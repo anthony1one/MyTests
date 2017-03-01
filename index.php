@@ -5,21 +5,29 @@ include_once "DataBaseFunctions.php";
 
 //echo session_id();
 
-$arrayNameTests = selectFromTable("Name", "test_info")
+$array_name_tests = selectFromTable("Name", "test_info")
 ?>
 
 <html>
     <head>
         <title>Тесты</title>
-        <link rel="stylesheet" href="styles/bootstrap.css">
     </head>
     <body>
-        <h1 align="center">Выберите Тест</h1>
-        <?php
-        foreach ($arrayNameTests as $value) {
-            $str = urlencode($value['Name']);
-            echo "<p><a class='btn btn-primary' href=Test.php?test=$str>".$value['Name']."</a></p>";
-        }
-        ?>
+        <div class="headline">
+            <h1 align="center">Выберите Тест</h1>
+        </div>
+        <div class="test-list">
+            <?php
+            foreach ($array_name_tests as $value) {
+                $str = urlencode($value['Name']);
+                $value_name = $value['Name'];
+                echo "<input type='button' onclick=\"location.href='Test.php?test=$str'\" value='$value_name'/>";
+            }
+            ?>
+        </div>
+        <div class="create-del-tests">
+            <input type='button' onclick="location.href='NewTest.php'" value='Добавить тест'/>
+            <input type='button' onclick="location.href='DeleteTest.php'" value='Удалить тест'/>
+        </div>
     </body>
 </html>

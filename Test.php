@@ -26,7 +26,6 @@
 <html>
     <head>
         <title><?=$name?></title>
-        <link rel="stylesheet" href="styles/bootstrap.css">
     </head>
     <body>
         <h1 align="center"><?=$name?></h1>

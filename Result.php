@@ -3,16 +3,16 @@ session_start();
 
 include_once "CommonFunctions.php";
 
-$arr = $_SESSION['answers'];
+//$arr = $_SESSION['answers'];
 $id = $_SESSION['test_id'];
-$resultKey = findTestResult($arr);
+$resultKey = $_SESSION['answerValues'];
 $result = getResultTest($id, $resultKey);
+echo $resultKey."<br>";
 ?>
 
 <html>
     <head>
         <title>Результат</title>
-        <link rel="stylesheet" href="styles/bootstrap.css">
     </head>
     <body>
         <h1 align="center">Результат</h1>

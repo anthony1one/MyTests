@@ -3,8 +3,17 @@ function arrayWithFullTest($idTest){
     $strTestQuestions = "test_question_".$idTest.".txt";
     $strTestAnswers = "test_answer_".$idTest.".txt";
 
-    $arr1 = file("TestStore/test_num_id$idTest/$strTestQuestions");
-    $arr2 = file("TestStore/test_num_id$idTest/$strTestAnswers");
+    $arr1 = file_get_contents("TestStore/test_num_id$idTest/$strTestQuestions");
+    $arr2 = file_get_contents("TestStore/test_num_id$idTest/$strTestAnswers");
+
+    $arr1 = explode("///", $arr1);
+    $arr2 = explode("///", $arr2);
+
+//    print_r($arr1);
+//    echo "<br>----------------------<br>";
+//    print_r($arr2);
+//    die;
+
     $arrFinal = array();
 
     for ($i = 0; $i < count($arr1); $i++){
@@ -19,34 +28,47 @@ function arrayWithFullTest($idTest){
     return $arrFinal;
 }
 
+// str[0] - мин балл, str[1] - макс балл, str[2] - текст
 function getResultTest($idTest, $key){
     $strTestResults = "test_result_".$idTest.".txt";
+    $answer = "";
 
-    $arr = file("TestStore/test_num_id$idTest/$strTestResults");
-    $arrFinal = explode("///", $arr[0]);
+    $arr = file_get_contents("TestStore/test_num_id$idTest/$strTestResults");
 
-    return $arrFinal[$key - 1];
-}
+    $arrFinal = explode("///", $arr);
 
-function findTestResult($arr){
-    $arrDetails = array();
-    $max = 0;
-    $maxKey = 0;
+    foreach ($arrFinal as $value){
+        $str = explode("/", $value);
 
-    foreach ($arr as $value){
-        if (!array_key_exists($value, $arrDetails))
-            $arrDetails[$value] = 1;
-        else
-            $arrDetails[$value] += 1;
-    }
+        //print_r($str);
 
-    foreach ($arrDetails as $key=>$value){
-        if ($max < $value){
-            $max = $value;
-            $maxKey = $key;
+        if ($key >= $str[0] && $key <= $str[1]){
+            $answer = $str[2];
+            return $answer;
         }
-        else continue;
     }
-
-    return $maxKey;
+    return "Ошибка теста";
 }
+
+//function findTestResult($arr){
+//    $arrDetails = array();
+//    $max = 0;
+//    $maxKey = 0;
+//
+//    foreach ($arr as $value){
+//        if (!array_key_exists($value, $arrDetails))
+//            $arrDetails[$value] = 1;
+//        else
+//            $arrDetails[$value] += 1;
+//    }
+//
+//    foreach ($arrDetails as $key=>$value){
+//        if ($max < $value){
+//            $max = $value;
+//            $maxKey = $key;
+//        }
+//        else continue;
+//    }
+//
+//    return $maxKey;
+//}
